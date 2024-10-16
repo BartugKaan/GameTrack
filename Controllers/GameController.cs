@@ -102,5 +102,31 @@ namespace GameTrack.Controllers
       }
       return View(game);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int? id)
+    {
+      if (id == null)
+      {
+        return NotFound();
+      }
+
+      var game = await _context.Game.FirstOrDefaultAsync(m => m.Id == id);
+      if (game == null)
+      {
+        return NotFound();
+      }
+
+      return View(game);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+      var game = await _context.Game.FindAsync(id);
+      _context.Game.Remove(game);
+      await _context.SaveChangesAsync();
+      return RedirectToAction(nameof(Index));
+    }
   }
 }
