@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 namespace GameTrack.Models
 {
@@ -15,15 +14,16 @@ namespace GameTrack.Models
     [Display(Name = "Game Genre")]
     public string? Genre { get; set; }
 
-    [Display(Name = "Game Developer")]
+    [Display(Name = "Developer")]
     public string? Developer { get; set; }
 
     [Required(ErrorMessage = "Finished Date is required")]
-    [Display(Name = "Release Date")]
+    [Display(Name = "Finished Date")]
     public DateTime FinishedDate { get; set; }
 
     [Required(ErrorMessage = "Rating is required")]
     [Display(Name = "Game Rating")]
+    [Range(1, 10, ErrorMessage = "Rating must be between 1 and 10")]
     public int Rating { get; set; }
 
     [Required(ErrorMessage = "Review is required")]
