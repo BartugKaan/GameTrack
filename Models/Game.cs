@@ -10,6 +10,9 @@ namespace GameTrack.Models
     [Display(Name = "Game Title")]
     public string? Title { get; set; }
 
+    [Display(Name = "Game Image")]
+    public string? Image { get; set; } = string.Empty;
+
     [Required(ErrorMessage = "Genre is required")]
     [Display(Name = "Game Genre")]
     public string? Genre { get; set; }

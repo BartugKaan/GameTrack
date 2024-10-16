@@ -33,8 +33,42 @@ namespace GameTrack.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Game game)
+    public async Task<IActionResult> Create(Game game, IFormFile imageFile)
     {
+
+      var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
+
+      if (imageFile != null)
+      {
+        var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+        if (!allowenExtensions.Contains(extension))
+        {
+          ModelState.AddModelError("", "Only .jpg, .png, .jpeg files are allowed!");
+        }
+        else
+        {
+          if (imageFile.Length > 100 * 1024 * 1024)
+          {
+            ModelState.AddModelError("", "File size must be less than 100MB!");
+          }
+          var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+          var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
+          try
+          {
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+              await imageFile.CopyToAsync(stream);
+            }
+            Console.WriteLine("Image uploaded successfully!");
+            game.Image = randomFileName;
+            Console.WriteLine(game.Image);
+          }
+          catch
+          {
+            ModelState.AddModelError("", "There was an error while uploading the image!");
+          }
+        }
+      }
       if (ModelState.IsValid)
       {
         _context.Add(game);

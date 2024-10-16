@@ -15,6 +15,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Game Title</th>
+                <th scope="col">Game Image</th>
                 <th scope="col">Game Genre</th>
                 <th scope="col">Game Developer</th>
                 <th scope="col">Release Date</th>
@@ -31,6 +32,9 @@
                     <tr>
                         <td>@game.Id</td>
                         <td>@game.Title</td>
+                         <td>
+                            <img src="~/img/@game.Image" alt="@game.Title" style="width: 150; height: auto;">
+                        </td>
                         <td>@game.Genre</td>
                         <td>@game.Developer</td>
                         <td>@game.FinishedDate.ToString("yyyy-MM-dd")</td>
