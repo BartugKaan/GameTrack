@@ -1,0 +1,84 @@
+@model GameTrack.Models.Game
+
+@{
+    ViewData["Title"] = "Create Game";
+}
+
+<div class="container mt-5">
+    <h2>Create a New Game</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Developer" class="control-label"></label>
+            <input asp-for="Developer" class="form-control" />
+            <span asp-validation-for="Developer" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FinishedDate" class="control-label"></label>
+            <input asp-for="FinishedDate" type="date" class="form-control" />
+            <span asp-validation-for="FinishedDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rating" class="control-label"></label>
+            <input asp-for="Rating" type="number" class="form-control" min="0" max="10" />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Review" class="control-label"></label>
+            <textarea asp-for="Review" class="form-control"></textarea>
+            <span asp-validation-for="Review" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Game Genre</label>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Action" id="genreAction" />
+                <label class="form-check-label" for="genreAction">Action</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Adventure" id="genreAdventure" />
+                <label class="form-check-label" for="genreAdventure">Adventure</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="RPG" id="genreRPG" />
+                <label class="form-check-label" for="genreRPG">RPG</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Simulation" id="genreSimulation" />
+                <label class="form-check-label" for="genreSimulation">Simulation</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Strategy" id="genreStrategy" />
+                <label class="form-check-label" for="genreStrategy">Strategy</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Sports" id="genreSports" />
+                <label class="form-check-label" for="genreSports">Sports</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Puzzle" id="genrePuzzle" />
+                <label class="form-check-label" for="genrePuzzle">Puzzle</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" asp-for="Genre" class="form-check-input" value="Horror" id="genreHorror" />
+                <label class="form-check-label" for="genreHorror">Horror</label>
+            </div>
+            <span asp-validation-for="Genre" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Game</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
