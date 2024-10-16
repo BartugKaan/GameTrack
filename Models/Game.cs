@@ -13,14 +13,21 @@ namespace GameTrack.Models
 
     [Required(ErrorMessage = "Genre is required")]
     [Display(Name = "Game Genre")]
-    public string Genre { get; set; }
+    public string? Genre { get; set; }
 
-    [Required(ErrorMessage = "Release Date is required")]
-    [Display(Name = "Release Date")]
-    public DateTime ReleaseDate { get; set; }
-
-    [Required(ErrorMessage = "Developer is required")]
     [Display(Name = "Game Developer")]
-    public string Developer { get; set; }
+    public string? Developer { get; set; }
+
+    [Required(ErrorMessage = "Finished Date is required")]
+    [Display(Name = "Release Date")]
+    public DateTime FinishedDate { get; set; }
+
+    [Required(ErrorMessage = "Rating is required")]
+    [Display(Name = "Game Rating")]
+    public int Rating { get; set; }
+
+    [Display(Name = "Game Review")]
+    public string? Review { get; set; }
+
   }
 }
