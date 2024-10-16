@@ -4,12 +4,13 @@
     ViewData["Title"] = "Delete Game";
 }
 
-<div class="container mt-5">
+<div class="container mt-5 text-center">
     <h2>Are you sure you want to delete this game?</h2>
 
-    <div class="card mt-4">
+    <div class="card mt-4 text-center">
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
+            <img src="~/img/@Model.Image" class="card-img-top" alt="@Model.Title" style="width:300px;" />
             <p class="card-text"><strong>Genre:</strong> @Model.Genre</p>
             <p class="card-text"><strong>Developer:</strong> @Model.Developer</p>
             <p class="card-text"><strong>Release Date:</strong> @Model.FinishedDate.ToString("yyyy-MM-dd")</p>

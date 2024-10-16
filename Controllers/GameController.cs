@@ -107,34 +107,63 @@ namespace GameTrack.Controllers
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Game game)
+    public async Task<IActionResult> Edit(int id, Game game, IFormFile imageFile)
     {
       if (id != game.Id)
       {
         return NotFound();
       }
 
+      var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
+
+      if (imageFile != null)
+      {
+        var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+        if (!allowenExtensions.Contains(extension))
+        {
+          ModelState.AddModelError("", "Only .jpg, .png, .jpeg files are allowed!");
+        }
+        else
+        {
+          if (imageFile.Length > 100 * 1024 * 1024)
+          {
+            ModelState.AddModelError("", "File size must be less than 100MB!");
+          }
+          var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+          var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
+          try
+          {
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+              await imageFile.CopyToAsync(stream);
+            }
+            game.Image = randomFileName;
+          }
+          catch
+          {
+            ModelState.AddModelError("", "There was an error while uploading the image!");
+          }
+        }
+      }
       if (ModelState.IsValid)
       {
-        try
-        {
-          _context.Update(game);
-          await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-          if (!GameExists(game.Id))
-          {
-            return NotFound();
-          }
-          else
-          {
-            throw;
-          }
-        }
+        _context.Update(game);
+        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
       }
-      return View(game);
+      else
+      {
+        foreach (var modelState in ModelState.Values)
+        {
+          foreach (var error in modelState.Errors)
+          {
+            Console.WriteLine(error.ErrorMessage);
+            Console.WriteLine("Bir hata oluştu");
+          }
+        }
+        return View(game);
+      }
     }
 
     [HttpGet]
