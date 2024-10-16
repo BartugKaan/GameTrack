@@ -187,6 +187,18 @@ namespace GameTrack.Controllers
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
       var game = await _context.Game.FindAsync(id);
+
+      var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", game.Image);
+
+      try
+      {
+        System.IO.File.Delete(path);
+      }
+      catch
+      {
+        Console.WriteLine("There was an error while deleting the image!");
+      }
+
       _context.Game.Remove(game);
       await _context.SaveChangesAsync();
       return RedirectToAction(nameof(Index));
