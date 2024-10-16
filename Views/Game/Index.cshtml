@@ -15,6 +15,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Game Title</th>
+                <th scope="col">Game Image</th>
                 <th scope="col">Game Genre</th>
                 <th scope="col">Game Developer</th>
                 <th scope="col">Release Date</th>
@@ -31,10 +32,13 @@
                     <tr>
                         <td>@game.Id</td>
                         <td>@game.Title</td>
+                         <td>
+                            <img src="~/img/@game.Image" alt="@game.Title" style="width: 150px; height: auto;">
+                        </td>
                         <td>@game.Genre</td>
                         <td>@game.Developer</td>
-                        <td>@game.FinishedDate.ToString("yyyy-MM-dd")</td>
-                        <td>@game.Rating</td>
+                        <td>@game.FinishedDate.ToString("dd-MM-yyyy")</td>
+                        <td>@game.Rating / 10</td>
                         <td>@game.Review</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-sm btn-warning">Edit</a>
