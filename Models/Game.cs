@@ -26,6 +26,7 @@ namespace GameTrack.Models
     [Display(Name = "Game Rating")]
     public int Rating { get; set; }
 
+    [Required(ErrorMessage = "Review is required")]
     [Display(Name = "Game Review")]
     public string? Review { get; set; }
 
