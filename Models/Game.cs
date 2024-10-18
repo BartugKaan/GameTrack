@@ -17,7 +17,7 @@ namespace GameTrack.Models
     [Display(Name = "Game Genre")]
     public int? Genre { get; set; }
 
-    public Genre? GenreNavigation { get; set; } = new Genre();
+    public Genre? GenreNavigation { get; set; }
 
     [Display(Name = "Developer")]
     public string? Developer { get; set; }

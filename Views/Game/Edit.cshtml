@@ -49,13 +49,13 @@
 
         <div class="form-group">
             <label class="control-label">Game Genre</label>
-            <select asp-for="Genre" class="form-control" asp-items="ViewBag.Genres">
-                <option value="">-- Select Genre --</option>
+            <select asp-for="Genre" class="form-control" asp-items="ViewBag.Categories">
+            <option value="">-- Select Genre --</option>
             </select>
             <span asp-validation-for="Genre" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Game</button>
+        <button type="submit" class="btn btn-primary my-2">Update Game</button>
     </form>
 </div>
 

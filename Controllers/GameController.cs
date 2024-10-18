@@ -20,10 +20,8 @@ namespace GameTrack.Controllers
       return _context.Games.Any(e => e.Id == id);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Index()
+    private async Task SetGenresAsync()
     {
-      ViewBag.Genres = await _context.Genres.ToListAsync();
       var games = await _context.Games
        .Include(g => g.GenreNavigation)
        .ToListAsync();
@@ -32,6 +30,13 @@ namespace GameTrack.Controllers
       {
         game.GenreNavigation = await _context.Genres.FirstOrDefaultAsync(g => g.GenreId == game.Genre);
       }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+      ViewBag.Genres = await _context.Genres.ToListAsync();
+      await SetGenresAsync();
 
       return View(await _context.Games.ToListAsync());
     }
@@ -114,7 +119,7 @@ namespace GameTrack.Controllers
       {
         return NotFound();
       }
-
+      ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name", game.Genre);
       return View(game);
     }
 
@@ -127,6 +132,7 @@ namespace GameTrack.Controllers
       {
         return NotFound();
       }
+
 
       var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
 
@@ -176,7 +182,7 @@ namespace GameTrack.Controllers
             Console.WriteLine("Bir hata oluştu");
           }
         }
-        ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
+        ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name", game.Genre);
         return View(game);
       }
     }
@@ -194,6 +200,8 @@ namespace GameTrack.Controllers
       {
         return NotFound();
       }
+
+      await SetGenresAsync();
 
       return View(game);
     }
