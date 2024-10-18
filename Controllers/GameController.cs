@@ -1,6 +1,7 @@
 using GameTrack.Data;
 using GameTrack.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameTrack.Controllers
@@ -16,18 +17,29 @@ namespace GameTrack.Controllers
 
     private bool GameExists(int id)
     {
-      return _context.Game.Any(e => e.Id == id);
+      return _context.Games.Any(e => e.Id == id);
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-      return View(await _context.Game.ToListAsync());
+      ViewBag.Genres = await _context.Genres.ToListAsync();
+      var games = await _context.Games
+       .Include(g => g.GenreNavigation)
+       .ToListAsync();
+
+      foreach (var game in games)
+      {
+        game.GenreNavigation = await _context.Genres.FirstOrDefaultAsync(g => g.GenreId == game.Genre);
+      }
+
+      return View(await _context.Games.ToListAsync());
     }
 
     [HttpGet]
     public IActionResult Create()
     {
+      ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
       return View();
     }
 
@@ -35,7 +47,6 @@ namespace GameTrack.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Game game, IFormFile imageFile)
     {
-
       var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
 
       if (imageFile != null)
@@ -72,6 +83,7 @@ namespace GameTrack.Controllers
       if (ModelState.IsValid)
       {
         _context.Add(game);
+        game.GenreNavigation = await _context.Genres.FirstOrDefaultAsync(g => g.GenreId == game.Genre);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
       }
@@ -84,6 +96,7 @@ namespace GameTrack.Controllers
             Console.WriteLine(error.ErrorMessage);
           }
         }
+        ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
         return View(game);
       }
     }
@@ -96,7 +109,7 @@ namespace GameTrack.Controllers
         return NotFound();
       }
 
-      var game = await _context.Game.FindAsync(id);
+      var game = await _context.Games.FindAsync(id);
       if (game == null)
       {
         return NotFound();
@@ -109,6 +122,7 @@ namespace GameTrack.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Game game, IFormFile imageFile)
     {
+
       if (id != game.Id)
       {
         return NotFound();
@@ -162,6 +176,7 @@ namespace GameTrack.Controllers
             Console.WriteLine("Bir hata oluştu");
           }
         }
+        ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name");
         return View(game);
       }
     }
@@ -174,7 +189,7 @@ namespace GameTrack.Controllers
         return NotFound();
       }
 
-      var game = await _context.Game.FirstOrDefaultAsync(m => m.Id == id);
+      var game = await _context.Games.FirstOrDefaultAsync(m => m.Id == id);
       if (game == null)
       {
         return NotFound();
@@ -186,7 +201,7 @@ namespace GameTrack.Controllers
     [HttpPost, ActionName("Delete")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      var game = await _context.Game.FindAsync(id);
+      var game = await _context.Games.FindAsync(id);
 
       var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", game.Image);
 
@@ -199,7 +214,7 @@ namespace GameTrack.Controllers
         Console.WriteLine("There was an error while deleting the image!");
       }
 
-      _context.Game.Remove(game);
+      _context.Games.Remove(game);
       await _context.SaveChangesAsync();
       return RedirectToAction(nameof(Index));
     }

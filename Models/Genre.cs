@@ -5,10 +5,8 @@ namespace GameTrack.Models
   public class Genre
   {
     [Key]
-    public int Id { get; set; }
+    public int GenreId { get; set; }
 
-    [Required(ErrorMessage = "Name is required")]
-    [Display(Name = "Genre Name")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
   }
 }

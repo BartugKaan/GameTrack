@@ -15,7 +15,9 @@ namespace GameTrack.Models
 
     [Required(ErrorMessage = "Genre is required")]
     [Display(Name = "Game Genre")]
-    public string? Genre { get; set; }
+    public int? Genre { get; set; }
+
+    public Genre? GenreNavigation { get; set; } = new Genre();
 
     [Display(Name = "Developer")]
     public string? Developer { get; set; }
