@@ -3,6 +3,7 @@ using System;
 using GameTrack.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameTrack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241018095707_DebugForGenre")]
+    partial class DebugForGenre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -112,10 +115,15 @@ namespace GameTrack.Migrations
             modelBuilder.Entity("GameTrack.Models.Game", b =>
                 {
                     b.HasOne("GameTrack.Models.Genre", "GenreNavigation")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("GenreNavigationGenreId");
 
                     b.Navigation("GenreNavigation");
+                });
+
+            modelBuilder.Entity("GameTrack.Models.Genre", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

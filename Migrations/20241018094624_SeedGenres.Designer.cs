@@ -3,6 +3,7 @@ using System;
 using GameTrack.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameTrack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241018094624_SeedGenres")]
+    partial class SeedGenres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -33,7 +36,7 @@ namespace GameTrack.Migrations
                         .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GenreNavigationGenreId")
+                    b.Property<int>("GenreNavigationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Image")
@@ -52,14 +55,14 @@ namespace GameTrack.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenreNavigationGenreId");
+                    b.HasIndex("GenreNavigationId");
 
                     b.ToTable("Games");
                 });
 
             modelBuilder.Entity("GameTrack.Models.Genre", b =>
                 {
-                    b.Property<int>("GenreId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -67,44 +70,44 @@ namespace GameTrack.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("GenreId");
+                    b.HasKey("Id");
 
                     b.ToTable("Genres");
 
                     b.HasData(
                         new
                         {
-                            GenreId = 1,
+                            Id = 1,
                             Name = "Action"
                         },
                         new
                         {
-                            GenreId = 2,
+                            Id = 2,
                             Name = "Adventure"
                         },
                         new
                         {
-                            GenreId = 3,
+                            Id = 3,
                             Name = "RPG"
                         },
                         new
                         {
-                            GenreId = 4,
+                            Id = 4,
                             Name = "Simulation"
                         },
                         new
                         {
-                            GenreId = 5,
+                            Id = 5,
                             Name = "Strategy"
                         },
                         new
                         {
-                            GenreId = 6,
+                            Id = 6,
                             Name = "Sports"
                         },
                         new
                         {
-                            GenreId = 7,
+                            Id = 7,
                             Name = "Puzzle"
                         });
                 });
@@ -112,10 +115,17 @@ namespace GameTrack.Migrations
             modelBuilder.Entity("GameTrack.Models.Game", b =>
                 {
                     b.HasOne("GameTrack.Models.Genre", "GenreNavigation")
-                        .WithMany()
-                        .HasForeignKey("GenreNavigationGenreId");
+                        .WithMany("Games")
+                        .HasForeignKey("GenreNavigationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("GenreNavigation");
+                });
+
+            modelBuilder.Entity("GameTrack.Models.Genre", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }
