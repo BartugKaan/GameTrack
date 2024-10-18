@@ -1,8 +1,57 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Game>
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <h2 class="mb-4">Game Library</h2>
+
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var game in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <img src="~/img/@game.Image" class="card-img-top" alt="@game.Title" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Title</h5>
+                            <p class="card-text">
+                                <strong>Genre:</strong>
+                                @{
+                                    var genreColor = game.GenreNavigation.Name switch
+                                    {
+                                        "Action" => "btn-danger",        
+                                        "Adventure" => "btn-success",    
+                                        "RPG" => "btn-primary",          
+                                        "Simulation" => "btn-info",      
+                                        "Strategy" => "btn-warning",     
+                                        "Sports" => "btn-light",         
+                                        "Puzzle" => "btn-dark",          
+                                        "FPS" => "btn-secondary",        
+                                        "MMO" => "btn-purple",          
+                                        _ => "btn-secondary"             
+                                    };
+                                }
+                                <span class="btn btn-sm @genreColor rounded-pill">
+                                    @game.GenreNavigation.Name
+                                </span>
+                            </p>
+                            <p class="card-text"><strong>Developer:</strong> @game.Developer</p>
+                            <p class="card-text"><strong>Finished Date:</strong> @game.FinishedDate.ToString("dd-MM-yyyy")</p>
+                            <p class="card-text"><strong>Rating:</strong> @game.Rating / 10</p>
+                            <p class="card-text">@game.Review.Substring(0, Math.Min(100, game.Review.Length))...</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center">No games found.</p>
+            </div>
+        }
+    </div>
 </div>

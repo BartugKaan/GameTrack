@@ -22,10 +22,10 @@ namespace GameTrack.Data
         new Genre { GenreId = 4, Name = "Simulation" },
         new Genre { GenreId = 5, Name = "Strategy" },
         new Genre { GenreId = 6, Name = "Sports" },
-        new Genre { GenreId = 7, Name = "Puzzle" }
+        new Genre { GenreId = 7, Name = "Puzzle" },
+
+        new Genre { GenreId = 9, Name = "MMO" }
       );
-
     }
-
   }
 }
