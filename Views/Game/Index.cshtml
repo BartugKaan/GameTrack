@@ -35,7 +35,7 @@
                          <td>
                             <img src="~/img/@game.Image" alt="@game.Title" style="width: 150px; height: auto;">
                         </td>
-                        <td>@game.GenreNavigation.Name</td>
+                        <td>@game.GenreNavigation?.Name</td>
                         <td>@game.Developer</td>
                         <td>@game.FinishedDate.ToString("dd-MM-yyyy")</td>
                         <td>@game.Rating / 10</td>

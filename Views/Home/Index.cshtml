@@ -20,7 +20,7 @@
                             <p class="card-text">
                                 <strong>Genre:</strong>
                                 @{
-                                    var genreColor = game.GenreNavigation.Name switch
+                                    var genreColor = game.GenreNavigation?.Name switch
                                     {
                                         "Action" => "btn-danger",        
                                         "Adventure" => "btn-success",    
@@ -35,13 +35,13 @@
                                     };
                                 }
                                 <span class="btn btn-sm @genreColor rounded-pill">
-                                    @game.GenreNavigation.Name
+                                    @game.GenreNavigation?.Name
                                 </span>
                             </p>
                             <p class="card-text"><strong>Developer:</strong> @game.Developer</p>
                             <p class="card-text"><strong>Finished Date:</strong> @game.FinishedDate.ToString("dd-MM-yyyy")</p>
                             <p class="card-text"><strong>Rating:</strong> @game.Rating / 10</p>
-                            <p class="card-text">@game.Review.Substring(0, Math.Min(100, game.Review.Length))...</p>
+                            <p class="card-text">@game.Review?.Substring(0, Math.Min(100, game.Review.Length))...</p>
                         </div>
                     </div>
                 </div>

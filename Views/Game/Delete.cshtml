@@ -11,7 +11,7 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Title</h5>
             <img src="~/img/@Model.Image" class="card-img-top" alt="@Model.Title" style="width:300px;" />
-            <p class="card-text"><strong>Genre:</strong> @Model.GenreNavigation.Name</p>
+            <p class="card-text"><strong>Genre:</strong> @Model.GenreNavigation?.Name</p>
             <p class="card-text"><strong>Developer:</strong> @Model.Developer</p>
             <p class="card-text"><strong>Release Date:</strong> @Model.FinishedDate.ToString("yyyy-MM-dd")</p>
             <p class="card-text"><strong>Rating:</strong> @Model.Rating</p>
