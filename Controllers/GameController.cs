@@ -127,19 +127,29 @@ namespace GameTrack.Controllers
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Game game, IFormFile imageFile)
     {
-
       if (id != game.Id)
       {
         return NotFound();
       }
 
+      var existingGame = await _context.Games.AsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
+      if (existingGame == null)
+      {
+        return NotFound();
+      }
 
-      var allowenExtensions = new[] { ".jpg", ".png", ".jpeg" };
+      ModelState.Remove("imageFile");
 
-      if (imageFile != null)
+      var allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
+
+      if (imageFile == null || imageFile.Length == 0)
+      {
+        game.Image = existingGame.Image;
+      }
+      else
       {
         var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-        if (!allowenExtensions.Contains(extension))
+        if (!allowedExtensions.Contains(extension))
         {
           ModelState.AddModelError("", "Only .jpg, .png, .jpeg files are allowed!");
         }
@@ -149,11 +159,10 @@ namespace GameTrack.Controllers
           {
             ModelState.AddModelError("", "File size must be less than 100MB!");
           }
-          var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+          var randomFileName = $"{Guid.NewGuid()}{extension}";
           var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
           try
           {
-
             using (var stream = new FileStream(path, FileMode.Create))
             {
               await imageFile.CopyToAsync(stream);
@@ -179,7 +188,6 @@ namespace GameTrack.Controllers
           foreach (var error in modelState.Errors)
           {
             Console.WriteLine(error.ErrorMessage);
-            Console.WriteLine("Bir hata oluştu");
           }
         }
         ViewBag.Categories = new SelectList(_context.Genres.ToList(), "GenreId", "Name", game.Genre);
