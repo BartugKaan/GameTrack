@@ -4,9 +4,45 @@
     ViewData["Title"] = "Home";
 }
 
+<div class="container text-center my-2">
+    <div class="mb-4">
+        <h1 class="hero-title display-4 fw-bold text-purple">GameTrack</h1>
+        <p class="lead text-muted">Track your game collection and share your reviews with others.</p>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="#" class="btn btn-success btn-lg me-3">Create a free account</a>
+        <div class="align-self-center">
+            <p class="mb-0">or <a href="#" class="login-link text-decoration-underline">log in</a> if you have an account</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <img src="~/img/HeroImage.png" class="img-fluid" alt="Hero Image">
+        </div>
+        <div class="col-md-6">
+            <div class="feature mb-4">
+                <h2 class="fw-bold"><i class="bi bi-controller me-2"></i>Track your game collection</h2>
+                <p class="text-muted">Keep track of your game collection by adding games you own, have played, or want to play.</p>
+            </div>
+            <div class="feature mb-4">
+                <h2 class="fw-bold"><i class="bi bi-chat-dots me-2"></i>Share your reviews</h2>
+                <p class="text-muted">Share your reviews with others and read reviews from other users.</p>
+            </div>
+            <div class="feature">
+                <h2 class="fw-bold"><i class="bi bi-search me-2"></i>Discover new games</h2>
+                <p class="text-muted">Discover new games by browsing the game library and reading reviews from other users.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container mt-5">
     <h2 class="mb-4">Game Library</h2>
-
     <div class="row">
         @if (Model != null && Model.Any())
         {
@@ -50,7 +86,7 @@
         else
         {
             <div class="col-12">
-                <p class="text-center">No games found.</p>
+                <p class="text-center">No games found. <a asp-controller="Game" asp-action="Create">Let's add some Game.</a></p>
             </div>
         }
     </div>

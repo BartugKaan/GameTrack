@@ -29,3 +29,48 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.login-link {
+  color: #333;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.moder-link {
+  color: #fff;
+}
+
+.modern-btn {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.modern-btn:hover {
+  background-color: #45a049;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modern-btn-outline {
+  background-color: transparent;
+  color: #4caf50;
+  border: 2px solid #4caf50;
+  border-radius: 30px;
+  padding: 8px 23px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.modern-btn-outline:hover {
+  background-color: #4caf50;
+  color: #fff;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
