@@ -1,0 +1,24 @@
+@model GameTrack.Models.Genre
+
+@{
+    ViewData["Title"] = "Add New Genre";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Add New Genre</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Add Genre</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

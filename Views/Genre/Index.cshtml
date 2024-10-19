@@ -1,0 +1,43 @@
+@model IEnumerable<GameTrack.Models.Genre>
+
+@{
+    ViewData["Title"] = "Genres";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Genre List</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Create" class="btn btn-primary">Add New Genre</a>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Genre Name</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var genre in Model)
+                {
+                    <tr>
+                        <td>@genre.GenreId</td>
+                        <td>@genre.Name</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@genre.GenreId" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@genre.GenreId" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">No genres found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
