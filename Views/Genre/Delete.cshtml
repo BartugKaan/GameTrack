@@ -1,0 +1,21 @@
+@model GameTrack.Models.Genre
+
+@{
+    ViewData["Title"] = "Delete Genre";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Delete Genre</h2>
+
+    <div class="alert alert-warning" role="alert">
+        Are you sure you want to delete this genre?
+    </div>
+
+    <h4>@Model.Name</h4>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="GenreId" />
+        <button type="submit" class="btn btn-danger mt-3">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+</div>
