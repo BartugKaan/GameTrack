@@ -51,6 +51,11 @@ dotnet run
 - <b> Data/ </b> - Database context and Ef Code configurations
 
 ## Images
+<img width="1080" alt="Screenshot 2024-10-20 at 14 33 18" src="https://github.com/user-attachments/assets/2049bff5-a48c-4401-8e4a-862fd0345a1a">
+<img width="1080" alt="Screenshot 2024-10-20 at 14 34 05" src="https://github.com/user-attachments/assets/ed32b84b-88b3-4a66-babe-eae914f4c259">
+<img width="1080" alt="Screenshot 2024-10-20 at 14 33 24" src="https://github.com/user-attachments/assets/49e96da9-902f-4cdb-900e-f4f9fa8cc654">
+<img width="1080" alt="Screenshot 2024-10-20 at 14 33 28" src="https://github.com/user-attachments/assets/514362b2-fe52-4d73-b310-3bd7deb39d04">
+
 
 ## Contributing
 
