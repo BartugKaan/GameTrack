@@ -14,6 +14,7 @@ namespace GameTrack.Controllers
       _context = context;
     }
 
+    // Check if a genre exists
     private bool GenreExists(int id)
     {
       return _context.Genres.Any(e => e.GenreId == id);
@@ -37,6 +38,7 @@ namespace GameTrack.Controllers
     {
       if (ModelState.IsValid)
       {
+        // Add the genre to the database if model is valid
         _context.Add(genre);
         await _context.SaveChangesAsync();
         return RedirectToAction("Index");
@@ -111,10 +113,12 @@ namespace GameTrack.Controllers
       return View(genre);
     }
 
+    // POST: Genres/Delete/id
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
+      // Delete the genre
       var genre = await _context.Genres.FindAsync(id);
       if (genre != null)
       {

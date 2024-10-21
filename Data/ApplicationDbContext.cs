@@ -8,13 +8,14 @@ namespace GameTrack.Data
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
+    // Add a DbSet for each entity you want to include in your model
     public DbSet<Game> Games { get; set; }
     public DbSet<Genre> Genres { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
-
+      // Seed genres
       modelBuilder.Entity<Genre>().HasData(
         new Genre { GenreId = 1, Name = "Action" },
         new Genre { GenreId = 2, Name = "Adventure" },

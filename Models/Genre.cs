@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GameTrack.Models
 {
+  // Define the Genre class
   public class Genre
   {
     [Key]

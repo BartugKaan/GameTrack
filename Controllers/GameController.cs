@@ -22,10 +22,12 @@ namespace GameTrack.Controllers
 
     private async Task SetGenresAsync()
     {
+      // Get all games
       var games = await _context.Games
        .Include(g => g.GenreNavigation)
        .ToListAsync();
 
+      // Set the GenreNavigation property for each game
       foreach (var game in games)
       {
         game.GenreNavigation = await _context.Genres.FirstOrDefaultAsync(g => g.GenreId == game.Genre);
@@ -35,6 +37,7 @@ namespace GameTrack.Controllers
     [HttpGet]
     public async Task<IActionResult> Index()
     {
+      // Store all genres in ViewBag
       ViewBag.Genres = await _context.Genres.ToListAsync();
       await SetGenresAsync();
 
@@ -56,6 +59,7 @@ namespace GameTrack.Controllers
 
       if (imageFile != null)
       {
+        // Check if the file is an image
         var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
         if (!allowenExtensions.Contains(extension))
         {
@@ -63,10 +67,12 @@ namespace GameTrack.Controllers
         }
         else
         {
+          // Check if the file size is less than 100MB
           if (imageFile.Length > 100 * 1024 * 1024)
           {
             ModelState.AddModelError("", "File size must be less than 100MB!");
           }
+          // Generate a random file name
           var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
           var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
           try
@@ -87,6 +93,7 @@ namespace GameTrack.Controllers
       }
       if (ModelState.IsValid)
       {
+        // Add the game to the database
         _context.Add(game);
         game.GenreNavigation = await _context.Genres.FirstOrDefaultAsync(g => g.GenreId == game.Genre);
         await _context.SaveChangesAsync();
@@ -131,7 +138,7 @@ namespace GameTrack.Controllers
       {
         return NotFound();
       }
-
+      // Get the existing game
       var existingGame = await _context.Games.AsNoTracking().FirstOrDefaultAsync(g => g.Id == id);
       if (existingGame == null)
       {
@@ -141,13 +148,14 @@ namespace GameTrack.Controllers
       ModelState.Remove("imageFile");
 
       var allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
-
+      // Check if the image file is null or empty
       if (imageFile == null || imageFile.Length == 0)
       {
         game.Image = existingGame.Image;
       }
       else
       {
+        // Check if the file is an image
         var extension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
         if (!allowedExtensions.Contains(extension))
         {
@@ -159,6 +167,7 @@ namespace GameTrack.Controllers
           {
             ModelState.AddModelError("", "File size must be less than 100MB!");
           }
+          // Generate a random file name
           var randomFileName = $"{Guid.NewGuid()}{extension}";
           var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
           try
@@ -214,6 +223,7 @@ namespace GameTrack.Controllers
       return View(game);
     }
 
+    // POST: GameController/Delete/id
     [HttpPost, ActionName("Delete")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {

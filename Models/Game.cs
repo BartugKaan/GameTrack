@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace GameTrack.Models
 {
+  // Define the Game class
   public class Game
   {
     [Key]
